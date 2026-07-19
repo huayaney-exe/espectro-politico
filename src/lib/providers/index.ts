@@ -4,6 +4,7 @@
 import { LLMProvider } from "./types";
 import { MockProvider } from "./mock";
 import { AnthropicProvider } from "./anthropic";
+import { OpenAIProvider } from "./openai";
 
 export * from "./types";
 
@@ -17,6 +18,20 @@ export function getProvider(): LLMProvider {
     }
     console.warn(
       "[espectro] LLM_PROVIDER=anthropic pero falta ANTHROPIC_API_KEY; usando MockProvider."
+    );
+  }
+
+  if (which === "openai") {
+    const key = process.env.OPENAI_API_KEY;
+    if (key) {
+      return new OpenAIProvider(
+        key,
+        process.env.OPENAI_MODEL,
+        process.env.OPENAI_BASE_URL
+      );
+    }
+    console.warn(
+      "[espectro] LLM_PROVIDER=openai pero falta OPENAI_API_KEY; usando MockProvider."
     );
   }
 
