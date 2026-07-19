@@ -1,0 +1,194 @@
+{
+  "country": "AR",
+  "version": "0.1",
+  "disclaimer": "Perfiles ILUSTRATIVOS derivados de posiciones públicas documentadas; requieren validación experta. No son medición oficial.",
+  "politicians": [
+    {
+      "id": "milei",
+      "name": "Javier Milei",
+      "period": "2023-2026",
+      "vector": {
+        "E1": 0,
+        "E2": 1,
+        "E3": 0,
+        "E4": 2,
+        "E5": 1,
+        "E6": 0,
+        "E7": 1,
+        "E8": 2,
+        "E9": 1,
+        "E10": 2,
+        "E11": 1,
+        "E12": 2
+      },
+      "confidence": "alta",
+      "basis": [
+        "E1/E11: anarcocapitalismo, motosierra al gasto público, ataque frontal al Estado en salud y educación.",
+        "E6: propuesta central de dolarización y cierre del Banco Central (mínima soberanía monetaria).",
+        "E2/E7: RIGI y régimen pro-extractivo que debilita la consulta indígena y facilita minería del litio.",
+        "E12/E5: renuncia a los BRICS y alineamiento explícito con EE.UU. e Israel, aunque con pragmatismo comercial hacia China.",
+        "E3: libre comercio radical y apertura, contra el proteccionismo industrial."
+      ],
+      "sources": [
+        "https://es.wikipedia.org/wiki/Pol%C3%ADtica_exterior_del_gobierno_de_Javier_Milei",
+        "https://cnnespanol.cnn.com/2023/12/29/argentin-renuncio-brics-carta-javier-milei-orix-arg",
+        "https://climatica.coop/milei-elon-musk-y-el-triangulo-del-litio/"
+      ]
+    },
+    {
+      "id": "cfk",
+      "name": "Cristina Fernández de Kirchner",
+      "period": "2007-2015",
+      "vector": {
+        "E1": 9,
+        "E2": 5,
+        "E3": 9,
+        "E4": 7,
+        "E5": 7,
+        "E6": 8,
+        "E7": 5,
+        "E8": 8,
+        "E9": 6,
+        "E10": 9,
+        "E11": 9,
+        "E12": 8
+      },
+      "confidence": "alta",
+      "basis": [
+        "E1/E11: kirchnerismo con fuerte redistribución, AUH, moratorias, ampliación del Estado y de servicios públicos.",
+        "E3/E6: estatización de YPF y de las AFJP, control de cambios y defensa del peso y de la soberanía económica.",
+        "E8: matrimonio igualitario (2010) e Identidad de Género (2012) aprobados en su gestión.",
+        "E10: política activa de memoria, verdad y justicia y reapertura de juicios a represores.",
+        "E12: alineamiento con UNASUR/CELAC y bloques regionales frente a EE.UU."
+      ],
+      "sources": [
+        "https://es.wikipedia.org/wiki/Cristina_Fern%C3%A1ndez_de_Kirchner",
+        "Leyes 26.618 (matrimonio igualitario) y 26.743 (identidad de género)"
+      ]
+    },
+    {
+      "id": "massa",
+      "name": "Sergio Massa",
+      "period": "2013-2023",
+      "vector": {
+        "E1": 6,
+        "E2": 4,
+        "E3": 6,
+        "E4": 5,
+        "E5": 4,
+        "E6": 6,
+        "E7": 4,
+        "E8": 6,
+        "E9": 4,
+        "E10": 6,
+        "E11": 6,
+        "E12": 5
+      },
+      "confidence": "media",
+      "basis": [
+        "E1/E11: peronismo de centro, políticas sociales y de intervención estatal moderadas como ministro de Economía.",
+        "E6: defensa del peso y de la política monetaria propia frente a la dolarización de Milei.",
+        "E12: perfil pragmático que combina relación con EE.UU., el FMI y con China.",
+        "E8: acompañamiento de la agenda de derechos sin ser su bandera principal.",
+        "Perfil de negociador de centro: valores intermedios con confianza media."
+      ],
+      "sources": [
+        "https://es.wikipedia.org/wiki/Sergio_Massa",
+        "Plataforma Unión por la Patria 2023"
+      ]
+    },
+    {
+      "id": "bullrich",
+      "name": "Patricia Bullrich",
+      "period": "2015-2026",
+      "vector": {
+        "E1": 3,
+        "E2": 2,
+        "E3": 3,
+        "E4": 3,
+        "E5": 2,
+        "E6": 3,
+        "E7": 2,
+        "E8": 4,
+        "E9": 1,
+        "E10": 4,
+        "E11": 3,
+        "E12": 2
+      },
+      "confidence": "media",
+      "basis": [
+        "E9: como ministra de Seguridad, doctrina de mano dura, uso de la fuerza y protocolo antipiquetes (muy bajo en enfoque social-judicial).",
+        "E1/E11: derecha pro-mercado, ajuste fiscal y reducción del Estado, luego aliada del gobierno de Milei.",
+        "E2/E7: pro-inversión extractiva, contra bloqueos y frenos comunitarios.",
+        "E12/E5: alineamiento firme con EE.UU. y Occidente.",
+        "E8: relativamente menos militante en lo social que la derecha religiosa."
+      ],
+      "sources": [
+        "https://es.wikipedia.org/wiki/Patricia_Bullrich",
+        "Plan de Gobierno Juntos por el Cambio 2023"
+      ]
+    },
+    {
+      "id": "kicillof",
+      "name": "Axel Kicillof",
+      "period": "2013-2026",
+      "vector": {
+        "E1": 9,
+        "E2": 5,
+        "E3": 9,
+        "E4": 7,
+        "E5": 6,
+        "E6": 8,
+        "E7": 5,
+        "E8": 8,
+        "E9": 6,
+        "E10": 9,
+        "E11": 9,
+        "E12": 8
+      },
+      "confidence": "alta",
+      "basis": [
+        "E3/E6: economista heterodoxo, autor de la reestatización de YPF, defensor del control estatal y de la soberanía económica.",
+        "E1/E11: kirchnerismo de izquierda con fuerte gasto social y ampliación del Estado como gobernador de Buenos Aires.",
+        "E8: apoyo a la agenda de derechos, feminismo y diversidad.",
+        "E10: defensa de la política de memoria, verdad y justicia.",
+        "E12: latinoamericanismo y crítica al alineamiento automático con EE.UU."
+      ],
+      "sources": [
+        "https://es.wikipedia.org/wiki/Axel_Kicillof",
+        "Debate parlamentario expropiación YPF 2012"
+      ]
+    },
+    {
+      "id": "macri",
+      "name": "Mauricio Macri",
+      "period": "2015-2019",
+      "vector": {
+        "E1": 2,
+        "E2": 2,
+        "E3": 2,
+        "E4": 3,
+        "E5": 2,
+        "E6": 3,
+        "E7": 2,
+        "E8": 5,
+        "E9": 3,
+        "E10": 4,
+        "E11": 3,
+        "E12": 2
+      },
+      "confidence": "alta",
+      "basis": [
+        "E1/E3/E11: gobierno pro-mercado, apertura comercial, quita de retenciones, reducción de subsidios y del rol del Estado.",
+        "E6: acuerdo con el FMI y liberalización cambiaria, sin dolarización pero pro-mercado en lo monetario.",
+        "E12/E5: fuerte alineamiento con EE.UU. y Occidente.",
+        "E8: postura socialmente moderada (no bloqueó el debate del aborto, aunque personalmente en contra).",
+        "E10: perfil crítico de los juicios de lesa humanidad ('curro de los derechos humanos'), hacia el olvido."
+      ],
+      "sources": [
+        "https://es.wikipedia.org/wiki/Mauricio_Macri",
+        "Plataforma Cambiemos 2015"
+      ]
+    }
+  ]
+}

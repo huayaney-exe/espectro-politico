@@ -1,0 +1,121 @@
+@import "tailwindcss";
+
+/* ---- Design tokens (ver docs/DECISIONS.md D6) ----
+   Identidad: espectro continuo, no binario. Gradiente multi-hue
+   (teal→violeta→ámbar) deliberadamente NO rojo-vs-azul. */
+@theme {
+  --color-bg: #0a0a0b;
+  --color-bg-soft: #131316;
+  --color-panel: #17171b;
+  --color-border: #2a2a31;
+  --color-ink: #ededec;
+  --color-ink-soft: #a1a1ab;
+  --color-ink-faint: #6b6b76;
+  --color-accent: #7dd3c0;
+  --color-accent-2: #a78bfa;
+  --color-accent-3: #fbbf77;
+
+  --font-display: Georgia, "Times New Roman", serif;
+  --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--color-accent-2);
+  color: #0a0a0b;
+}
+
+.font-display {
+  font-family: var(--font-display);
+}
+
+.spectrum-bar {
+  background: linear-gradient(
+    90deg,
+    var(--color-accent) 0%,
+    var(--color-accent-2) 50%,
+    var(--color-accent-3) 100%
+  );
+}
+
+.spectrum-text {
+  background: linear-gradient(
+    90deg,
+    var(--color-accent),
+    var(--color-accent-2),
+    var(--color-accent-3)
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.panel {
+  background: var(--color-panel);
+  border: 1px solid var(--color-border);
+  border-radius: 14px;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.7rem 1.3rem;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: transform 0.12s ease, opacity 0.12s ease, background 0.12s ease;
+  cursor: pointer;
+  border: 1px solid transparent;
+}
+.btn:active {
+  transform: translateY(1px);
+}
+.btn-primary {
+  background: var(--color-ink);
+  color: var(--color-bg);
+}
+.btn-primary:hover {
+  opacity: 0.9;
+}
+.btn-ghost {
+  background: transparent;
+  color: var(--color-ink);
+  border-color: var(--color-border);
+}
+.btn-ghost:hover {
+  background: var(--color-bg-soft);
+}
+
+.fade-in {
+  animation: fadeIn 0.4s ease both;
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+input,
+textarea {
+  font-family: inherit;
+}

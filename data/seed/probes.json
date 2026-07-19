@@ -1,0 +1,136 @@
+{
+  "version": "0.1",
+  "language": "es-PE",
+  "probes": [
+    {
+      "id": "p1",
+      "axes": ["E1", "E11"],
+      "prompt_es": "Imagínate que el próximo gobierno tiene plata extra para gastar. ¿Preferirías que la use en universidades y hospitales públicos gratuitos para todos, o en bajarle impuestos a las empresas para que inviertan y generen empleo? ¿Por qué?",
+      "why": "Distingue apetito redistributivo y preferencia por Estado proveedor de servicios básicos frente a lógica de mercado y goteo.",
+      "signal_hints": {
+        "low": "Prioriza bajar impuestos, teme el gasto público, cree que el privado da mejores servicios, habla de 'plata del pueblo mal gastada'.",
+        "high": "Defiende salud y educación gratuitas y universales como derecho, quiere que el Estado invierta fuerte aunque suba impuestos a los que más tienen."
+      }
+    },
+    {
+      "id": "p2",
+      "axes": ["E1"],
+      "prompt_es": "En el Perú un puñado de familias y grandes empresas concentra gran parte de la riqueza. ¿Crees que el Estado debería cobrarles más impuestos para repartir mejor, o que eso los ahuyenta y al final nos perjudica a todos?",
+      "why": "Aísla la actitud pura hacia la redistribución tributaria y la desigualdad, sin mezclarla con servicios.",
+      "signal_hints": {
+        "low": "La riqueza se gana con esfuerzo, subir impuestos espanta inversión, no hay que castigar al que produce.",
+        "high": "La desigualdad es injusta y estructural, hay que gravar a los más ricos y grandes fortunas para redistribuir."
+      }
+    },
+    {
+      "id": "p3",
+      "axes": ["E2", "E7"],
+      "prompt_es": "Piensa en un proyecto minero grande, tipo Tía María o Las Bambas, cerca de comunidades campesinas. Si la comunidad dice que no quiere el proyecto, ¿el Estado debería respetar esa decisión aunque se pierda inversión, o sacar el proyecto adelante por el bien del país?",
+      "why": "Mide restricción al extractivismo y peso del veto comunitario/indígena sobre el territorio frente a la prioridad de la inversión.",
+      "signal_hints": {
+        "low": "El país necesita la inversión, no puede una minoría frenar el desarrollo, hay que destrabar los proyectos.",
+        "high": "La comunidad decide sobre su territorio, la consulta previa debe ser vinculante, el agua y la tierra valen más que la mina."
+      }
+    },
+    {
+      "id": "p4",
+      "axes": ["E2", "E3"],
+      "prompt_es": "El litio y el cobre que salen del Perú se van casi en bruto al extranjero. ¿Qué te parece más sensato: exportarlos rápido como ahora para que entre plata ya, o frenar y exigir que primero se procesen e industrialicen acá aunque tome años?",
+      "why": "Separa la actitud hacia la extracción rápida de la ambición de industrializar y agregar valor localmente (soberanía productiva).",
+      "signal_hints": {
+        "low": "Vender rápido lo que tenemos, el mercado decide, industrializar es caro e ineficiente, mejor libre comercio.",
+        "high": "No regalar materia prima, el Estado debe empujar industria nacional y procesamiento local aunque cueste y tarde."
+      }
+    },
+    {
+      "id": "p5",
+      "axes": ["E4", "E12"],
+      "prompt_es": "Para el 5G y las redes del país se puede contratar a Huawei (China), que suele salir más barato, o a proveedores de EE.UU. y Europa que dicen ser más seguros pero cuestan más. ¿Con cuál irías y por qué?",
+      "why": "Discrimina soberanía/pragmatismo tecnológico y alineamiento geopolítico usando un caso concreto y polarizante.",
+      "signal_hints": {
+        "low": "Evitaría a China por seguridad y por alinearse con EE.UU./Occidente; desconfía de Huawei.",
+        "high": "Escogería lo más conveniente para el país sin subordinarse a EE.UU.; valora diversificar proveedores y no depender de una sola potencia."
+      }
+    },
+    {
+      "id": "p6",
+      "axes": ["E5", "E12"],
+      "prompt_es": "Si EE.UU. le pide al Perú sumarse a una alianza militar o poner una base a cambio de ayuda, y por otro lado China ofrece inversión sin condiciones, ¿qué debería hacer el país?",
+      "why": "Aísla soberanía militar y grado de alineamiento con EE.UU. frente a una postura multipolar o no alineada.",
+      "signal_hints": {
+        "low": "Alinearse con EE.UU. da seguridad y respaldo, es el socio natural de Occidente.",
+        "high": "El Perú debe ser neutral y autónomo, no atarse militarmente a ninguna potencia, cuidar independencia y diversificar socios."
+      }
+    },
+    {
+      "id": "p6b",
+      "axes": ["E6"],
+      "prompt_es": "Algunos países, como Ecuador o El Salvador, dejaron su moneda y adoptaron el dólar para dar estabilidad. Si al Perú le propusieran dolarizar y renunciar al sol y al Banco Central, ¿lo verías bien o mal?",
+      "why": "Aísla soberanía monetaria: dolarización total frente a mantener moneda y política monetaria propias.",
+      "signal_hints": {
+        "low": "Dolarizar da estabilidad y frena la inflación y la corrupción monetaria, mejor amarrarse al dólar.",
+        "high": "El país debe conservar su moneda y su Banco Central, la soberanía monetaria es clave para decidir su economía."
+      }
+    },
+    {
+      "id": "p7",
+      "axes": ["E7", "E8"],
+      "prompt_es": "En la sierra y la selva hay comunidades que reclaman que se reconozcan sus territorios y que su lengua y sus autoridades tengan valor oficial. ¿Hasta dónde debería llegar el Estado en reconocer eso: dejarlo como está, o darles autonomía real y derechos culturales plenos?",
+      "why": "Combina tierra/territorio indígena con la amplitud de derechos culturales y de identidad de los pueblos originarios.",
+      "signal_hints": {
+        "low": "Todos somos peruanos por igual, no hace falta darles trato especial ni tocar la propiedad de la tierra.",
+        "high": "Reconocer territorios, lenguas y autoridades indígenas plenamente, con autonomía y reparación histórica."
+      }
+    },
+    {
+      "id": "p8",
+      "axes": ["E8"],
+      "prompt_es": "Sobre el matrimonio igualitario y que una persona trans pueda cambiar su nombre en el DNI sin tanto trámite: ¿estás a favor, en contra, o te da igual? Cuéntame cómo lo ves.",
+      "why": "Mide amplitud de derechos culturales y de identidad en el eje social-liberal frente a conservador.",
+      "signal_hints": {
+        "low": "En contra por valores, la familia es hombre y mujer, se oponen o incomodan con temas trans/LGBT.",
+        "high": "A favor pleno de matrimonio igualitario y derechos trans, lo ven como igualdad y libertad."
+      }
+    },
+    {
+      "id": "p9",
+      "axes": ["E9"],
+      "prompt_es": "Con tanta inseguridad y extorsión, hay quienes piden sacar a los militares a las calles y mano dura, y otros dicen que eso no resuelve y que hay que atacar la pobreza, la prevención y arreglar la justicia. ¿Con cuál te identificas más?",
+      "why": "Discrimina el eje seguridad entre militarización/mano dura y enfoque social-judicial de causas.",
+      "signal_hints": {
+        "low": "Mano dura, militares en las calles, penas más duras, orden ante todo.",
+        "high": "La cárcel y los militares no resuelven, hay que invertir en prevención, oportunidades y reformar la justicia."
+      }
+    },
+    {
+      "id": "p10",
+      "axes": ["E10"],
+      "prompt_es": "Sobre los años de violencia (Sendero, las Fuerzas Armadas, Fujimori, las muertes en las protestas de 2022-2023): ¿crees que es mejor pasar la página y buscar reconciliación, o que hay que investigar, juzgar y recordar aunque incomode?",
+      "why": "Mide memoria histórica: amnistía/olvido frente a verdad, justicia y memoria.",
+      "signal_hints": {
+        "low": "Mejor mirar adelante, no reabrir heridas, hasta amnistía para los militares; el pasado divide.",
+        "high": "Hay que juzgar a los responsables y mantener la memoria de las víctimas, sin impunidad."
+      }
+    },
+    {
+      "id": "p11",
+      "axes": ["E3", "E4"],
+      "prompt_es": "Para modernizar el Estado y la economía, ¿preferirías que el Perú compre tecnología y servicios listos del extranjero porque es más rápido, o que apueste por desarrollar sus propias empresas, software e industria aunque sea más lento y caro?",
+      "why": "Refuerza soberanía productiva y tecnológica en clave de autonomía frente a dependencia de proveedores externos.",
+      "signal_hints": {
+        "low": "Comprar afuera lo que ya funciona, no reinventar la rueda, abrirse al mundo y al mejor proveedor.",
+        "high": "Desarrollar capacidad e industria propias, reducir dependencia externa, invertir en tecnología nacional."
+      }
+    },
+    {
+      "id": "p12",
+      "axes": ["E11", "E1"],
+      "prompt_es": "Si tu hijo o sobrino pudiera estudiar gratis en una universidad pública de calidad o pagar en una privada mejor equipada, y tuvieras que elegir dónde debe poner el Estado su esfuerzo, ¿en fortalecer lo público gratuito o en dar becas y bonos para lo privado?",
+      "why": "Refuerza el rol del Estado en educación (público integral vs. subsidio a lo privado) con matiz redistributivo.",
+      "signal_hints": {
+        "low": "El Estado debe apoyar la elección privada con becas/vouchers, lo público suele ser deficiente.",
+        "high": "El Estado debe garantizar educación pública gratuita y de calidad como columna, no subsidiar lo privado."
+      }
+    }
+  ]
+}
