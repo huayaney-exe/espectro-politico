@@ -8,6 +8,9 @@ import { Turn } from "@/lib/providers/types";
 import { probeById } from "@/lib/probes";
 
 export const runtime = "nodejs";
+// Vercel corta las funciones a 10s por defecto; el scorer permite 45s +
+// 1 reintento. 60s es el máximo del plan Hobby.
+export const maxDuration = 60;
 
 // Caps de input: 13 probes hoy; margen para variantes futuras, no para abuso.
 const MAX_ANSWERS = 30;
