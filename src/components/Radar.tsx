@@ -37,21 +37,35 @@ export default function Radar({ vector, compare, size = 360 }: Props) {
     >
       <defs>
         <linearGradient id="radarFill" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stopColor="#7dd3c0" />
-          <stop offset="50%" stopColor="#a78bfa" />
-          <stop offset="100%" stopColor="#fbbf77" />
+          <stop offset="0%" stopColor="var(--color-accent)" />
+          <stop offset="50%" stopColor="var(--color-accent-2)" />
+          <stop offset="100%" stopColor="var(--color-accent-3)" />
         </linearGradient>
       </defs>
 
-      {/* Anillos de referencia */}
+      {/* Anillos de referencia — el de 5 (posición neutral) va enfatizado */}
       {rings.map((ring) => (
         <polygon
           key={ring}
           points={AXES.map((_, i) => pointFor(i, ring).join(",")).join(" ")}
           fill="none"
-          stroke="#2a2a31"
+          stroke={ring === 5 ? "var(--color-border)" : "var(--color-grid)"}
           strokeWidth={1}
+          strokeDasharray={ring === 5 ? "3 3" : undefined}
         />
+      ))}
+
+      {/* Escala: marca los anillos 5 y 10 sobre el radio vertical */}
+      {[5, 10].map((ring) => (
+        <text
+          key={ring}
+          x={cx + 4}
+          y={cy - (ring / 10) * r + (ring === 10 ? 10 : -3)}
+          fontSize={8}
+          fill="var(--color-ink-faint)"
+        >
+          {ring}
+        </text>
       ))}
 
       {/* Radios + etiquetas */}
@@ -62,12 +76,19 @@ export default function Radar({ vector, compare, size = 360 }: Props) {
           Math.abs(lx - cx) < 12 ? "middle" : lx > cx ? "start" : "end";
         return (
           <g key={ax.id}>
-            <line x1={cx} y1={cy} x2={x} y2={y} stroke="#1f1f25" strokeWidth={1} />
+            <line
+              x1={cx}
+              y1={cy}
+              x2={x}
+              y2={y}
+              stroke="var(--color-grid)"
+              strokeWidth={1}
+            />
             <text
               x={lx}
               y={ly}
               fontSize={9.5}
-              fill="#a1a1ab"
+              fill="var(--color-ink-soft)"
               textAnchor={anchor as "start" | "middle" | "end"}
               dominantBaseline="middle"
             >
@@ -85,22 +106,28 @@ export default function Radar({ vector, compare, size = 360 }: Props) {
           fillOpacity={0.12}
           stroke={compare.color}
           strokeWidth={1.5}
+          strokeLinejoin="round"
           strokeDasharray="4 3"
         />
       )}
 
       {/* Polígono del usuario */}
-      <polygon
-        points={polygon(vector)}
-        fill="url(#radarFill)"
-        fillOpacity={0.28}
-        stroke="url(#radarFill)"
-        strokeWidth={2}
-      />
-      {AXES.map((ax, i) => {
-        const [x, y] = pointFor(i, vector[ax.id]);
-        return <circle key={ax.id} cx={x} cy={y} r={2.6} fill="#ededec" />;
-      })}
+      <g className="radar-in">
+        <polygon
+          points={polygon(vector)}
+          fill="url(#radarFill)"
+          fillOpacity={0.28}
+          stroke="url(#radarFill)"
+          strokeWidth={2}
+          strokeLinejoin="round"
+        />
+        {AXES.map((ax, i) => {
+          const [x, y] = pointFor(i, vector[ax.id]);
+          return (
+            <circle key={ax.id} cx={x} cy={y} r={2.6} fill="var(--color-ink)" />
+          );
+        })}
+      </g>
     </svg>
   );
 }

@@ -91,9 +91,10 @@ export default function Chat() {
       } catch {}
       router.push(`/resultado#p=${code}`);
     } catch (err: any) {
+      // Importante: NO volvemos a la fase de preguntas — re-preguntar
+      // duplicaría la respuesta del mismo probe. Se reintenta el score
+      // con las respuestas ya registradas.
       setError(err?.message || "Algo falló");
-      setPhase("probes");
-      setProbeIdx(PROBES.length - 1);
     }
   }
 
@@ -155,7 +156,7 @@ export default function Chat() {
               }}
               rows={2}
               placeholder="Responde con tus palabras… (⌘/Ctrl + Enter para enviar)"
-              className="flex-1 resize-none px-4 py-3 rounded-xl text-[15px] outline-none"
+              className="field flex-1 resize-none px-4 py-3 rounded-xl text-[15px] outline-none"
               style={{
                 background: "var(--color-bg-soft)",
                 border: "1px solid var(--color-border)",
@@ -168,11 +169,16 @@ export default function Chat() {
           </div>
         )}
 
-        {phase === "scoring" && (
-          <p className="text-sm" style={{ color: "var(--color-ink-soft)" }}>
-            Calculando tu vector…
-          </p>
-        )}
+        {phase === "scoring" &&
+          (error ? (
+            <button className="btn btn-primary" onClick={() => score(answers)}>
+              Reintentar
+            </button>
+          ) : (
+            <p className="text-sm" style={{ color: "var(--color-ink-soft)" }}>
+              Calculando tu vector…
+            </p>
+          ))}
       </div>
     </div>
   );

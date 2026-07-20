@@ -26,25 +26,29 @@ heurístico determinista (similitud de tokens con las señales de cada pregunta 
 léxico de stance con manejo de negación). No es un LLM, es un piso funcional y
 reproducible.
 
-## Activar el LLM real (cuando tengas token)
-
-Todo está listo para enchufar el modelo. Solo:
+## Activar el LLM real (recomendado: OpenRouter)
 
 ```bash
 cp .env.example .env.local
 # edita .env.local:
-LLM_PROVIDER=anthropic
-ANTHROPIC_API_KEY=sk-ant-...
-ANTHROPIC_MODEL=claude-sonnet-4-6   # opcional
+LLM_PROVIDER=openrouter
+OPENROUTER_API_KEY=sk-or-...        # https://openrouter.ai/keys
+OPENROUTER_MODEL=openai/gpt-4o-mini # opcional; debe soportar structured outputs
+OPENROUTER_SITE_URL=                # opcional: atribución en rankings de OpenRouter
+OPENROUTER_SITE_NAME=Espectro       # opcional
 ```
 
-Reinicia `npm run dev`. El `AnthropicProvider` (`src/lib/providers/anthropic.ts`)
-toma el control del scoring: rúbrica de 12 ejes, `temperature: 0`, salida
-estructurada vía tool use, `null`/confianza baja cuando no hay evidencia (mitiga
-sicofancia). La key vive **solo server-side**, en la API route. Si falta la key,
-cae a mock con un aviso.
+Reinicia `npm run dev`. El `OpenRouterProvider`
+(`src/lib/providers/openrouter.ts`) hace el scoring con **structured outputs**
+(`response_format: json_schema` estricto — no tool-calling), `temperature: 0`,
+`require_parameters` (solo rutea a providers que soportan el schema), timeout +
+reintento ante 429/5xx, y respuestas del usuario delimitadas como datos
+(anti-inyección). La key vive **solo server-side**, en la API route. Si falta la
+key, cae a mock con un aviso.
 
-Para agregar otro proveedor (OpenAI, etc.), implementa la interfaz `LLMProvider`
+También hay providers para Anthropic directo (`LLM_PROVIDER=anthropic`) y
+cualquier API OpenAI-compatible (`LLM_PROVIDER=openai` + `OPENAI_BASE_URL`).
+Para agregar otro, implementa la interfaz `LLMProvider`
 (`src/lib/providers/types.ts`) y regístralo en `src/lib/providers/index.ts`.
 
 ---
@@ -108,6 +112,7 @@ npm run dev        # desarrollo
 npm run build      # build de producción
 npm run start      # servir build
 npm run typecheck  # tsc --noEmit
+npm test           # vitest (38 tests: projection, distance, encoding, describe, mock, openrouter)
 ```
 
 ## Límites honestos

@@ -22,7 +22,8 @@ export const W: Record<AxisId, Row> = {
 };
 
 // L1 de cada columna (suma de |peso|) para normalizar coords a ~[-1,1].
-export const L1 = { X: 6.1, Y: 3.45, Z: 2.6 };
+// Derivable de W; hay un test que verifica la consistencia.
+export const L1 = { X: 6.1, Y: 3.45, Z: 2.5 };
 
 export interface Projection3D {
   x: number; // [-1,1] económico/estructural
@@ -35,6 +36,11 @@ function center(s: number): number {
   return (s - 5) / 5;
 }
 
+/** Clampa a [-1,1] (el error de punto flotante puede excederlo por ~1e-16). */
+function unit(n: number): number {
+  return Math.max(-1, Math.min(1, n));
+}
+
 /** Proyecta un vector de 12 ejes a coordenadas 3D interpretables. */
 export function project(v: Vector): Projection3D {
   let x = 0, y = 0, z = 0;
@@ -44,7 +50,7 @@ export function project(v: Vector): Projection3D {
     y += c * W[id].Y;
     z += c * W[id].Z;
   }
-  return { x: x / L1.X, y: y / L1.Y, z: z / L1.Z };
+  return { x: unit(x / L1.X), y: unit(y / L1.Y), z: unit(z / L1.Z) };
 }
 
 export const AXIS_LABELS_2D = {

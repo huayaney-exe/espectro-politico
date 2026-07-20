@@ -14,6 +14,8 @@ export default function PoliticianMatch({ vector, politicians, disclaimer }: Pro
   const verdict = representationVerdict(vector, politicians);
   const ranked = rankPoliticians(vector, politicians).slice(0, 5);
   const pct = (m: number) => Math.round(m * 100);
+  // Apellido del más cercano, para las filas de residuos.
+  const closestSurname = verdict.closest.politician.name.split(" ").slice(-1)[0];
 
   return (
     <div className="flex flex-col gap-5">
@@ -53,7 +55,7 @@ export default function PoliticianMatch({ vector, politicians, disclaimer }: Pro
             >
               <span style={{ color: "var(--color-ink-soft)" }}>{r.name}</span>
               <span className="tabular-nums" style={{ color: "var(--color-ink-faint)" }}>
-                tú {r.userScore} · él/ella {r.polScore}{" "}
+                tú {r.userScore} · {closestSurname} {r.polScore}{" "}
                 <span style={{ color: "var(--color-accent-3)" }}>
                   (Δ{r.gap})
                 </span>

@@ -100,7 +100,7 @@ export default function ResultadoPage() {
           <p className="text-sm mb-2" style={{ color: "var(--color-ink-faint)" }}>
             Tu posición no es una etiqueta. Es esto:
           </p>
-          <h1 className="font-display text-3xl sm:text-4xl leading-tight mb-4 capitalize">
+          <h1 className="font-display text-3xl sm:text-4xl leading-tight mb-4 sentence-case">
             {profile.label}
           </h1>
           {contrast && (

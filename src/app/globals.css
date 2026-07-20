@@ -7,7 +7,9 @@
   --color-bg: #0a0a0b;
   --color-bg-soft: #131316;
   --color-panel: #17171b;
+  --color-well: #0d0d10; /* fondo de lienzos de datos (mapa, radar) */
   --color-border: #2a2a31;
+  --color-grid: #1f1f25; /* líneas de cuadrícula dentro de un lienzo */
   --color-ink: #ededec;
   --color-ink-soft: #a1a1ab;
   --color-ink-faint: #6b6b76;
@@ -83,7 +85,11 @@ body {
   border: 1px solid transparent;
 }
 .btn:active {
-  transform: translateY(1px);
+  transform: translateY(1px) scale(0.98);
+}
+.btn:focus-visible {
+  outline: 2px solid var(--color-accent-2);
+  outline-offset: 2px;
 }
 .btn-primary {
   background: var(--color-ink);
@@ -115,7 +121,44 @@ body {
   }
 }
 
+/* Entrada del polígono del radar: se despliega desde el centro. */
+.radar-in {
+  transform-origin: 50% 50%;
+  animation: radarIn 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+@keyframes radarIn {
+  from {
+    opacity: 0;
+    transform: scale(0.82);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Frase con solo la primera letra en mayúscula (labels en español). */
+.sentence-case::first-letter {
+  text-transform: uppercase;
+}
+
 input,
 textarea {
   font-family: inherit;
+}
+
+/* Foco visible sin pelear con el border inline: anillo por box-shadow. */
+.field:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--color-accent-2);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fade-in,
+  .radar-in {
+    animation: none;
+  }
+  .btn {
+    transition: none;
+  }
 }

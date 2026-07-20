@@ -33,7 +33,7 @@ Matriz `W` (filas E1..E12 → columnas X,Y,Z):
 | E11 Estado Salud/Educ  | 0.90 | 0.20 | 0.00 |
 | E12 Alineamiento Geo   | 0.60 | 0.20 | 0.20 |
 
-L1 normalizadores por columna: X = 6.10, Y = 3.45, Z = 2.60.
+L1 normalizadores por columna: X = 6.10, Y = 3.45, Z = 2.50 (suma de |peso|; corregido de 2.60 en la auditoría 2026-07).
 
 ## D5 — Distancia (político más cercano + frontera de no-representación)
 Euclidiana ponderada sobre los 12 ejes centrados (no sobre la proyección 2D). Down-weight de clusters colineales:
