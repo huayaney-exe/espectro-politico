@@ -69,7 +69,11 @@ export async function weaveQuestion(input: WeaveInput): Promise<string> {
       body: JSON.stringify({
         model: process.env.OPENROUTER_MODEL || "openai/gpt-4o-mini",
         temperature: 0.4,
-        max_tokens: 220,
+        // Presupuesto generoso: en modelos razonadores (GLM/DeepSeek) el
+        // pensamiento cuenta contra max_tokens; corto = respuesta vacía.
+        max_tokens: 1200,
+        // Apagar razonamiento donde el provider lo soporte (se ignora si no).
+        reasoning: { enabled: false },
         messages: [
           { role: "system", content: SYSTEM },
           {
@@ -82,7 +86,12 @@ export async function weaveQuestion(input: WeaveInput): Promise<string> {
     });
     if (!res.ok) return fallback(input);
     const data = await res.json();
-    const q = data.choices?.[0]?.message?.content?.trim();
+    const raw = data.choices?.[0]?.message?.content ?? "";
+    // Limpia bloques <think> de modelos razonadores y fences accidentales.
+    const q = raw
+      .replace(/<think>[\s\S]*?<\/think>/g, "")
+      .replace(/```[a-z]*\n?/g, "")
+      .trim();
     // Sanidad: no vacío, no desproporcionado, una pregunta.
     if (!q || q.length < 15 || q.length > 600) return fallback(input);
     return q;

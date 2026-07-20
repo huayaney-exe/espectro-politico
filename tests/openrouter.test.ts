@@ -3,6 +3,7 @@ import {
   DEFAULT_OPENROUTER_MODEL,
   OpenRouterProvider,
   SCORE_SCHEMA,
+  extractScores,
 } from "@/lib/providers/openrouter";
 import { Turn } from "@/lib/providers/types";
 
@@ -116,7 +117,7 @@ describe("OpenRouterProvider — parsing y robustez", () => {
     expect(r.confidence.E12).toBe(0.1);
   });
 
-  it("reintenta una vez ante 429 y luego tiene éxito", async () => {
+  it("si el modo structured falla (429), cae al modo JSON plano y tiene éxito", async () => {
     const fetchFn = vi
       .fn()
       .mockResolvedValueOnce(new Response("rate limited", { status: 429 }))
@@ -126,28 +127,75 @@ describe("OpenRouterProvider — parsing y robustez", () => {
     const r = await new OpenRouterProvider("k", { fetchFn }).scoreConversation(TURNS);
     expect(fetchFn).toHaveBeenCalledTimes(2);
     expect(r.vector.E1).toBe(7);
+
+    // El 2º intento NO usa response_format (funciona con cualquier endpoint)
+    // y apaga el razonamiento donde se soporte.
+    const second = JSON.parse(fetchFn.mock.calls[1][1].body);
+    expect(second.response_format).toBeUndefined();
+    expect(second.provider).toBeUndefined();
+    expect(second.reasoning).toEqual({ enabled: false });
+    expect(second.messages[1].content).toContain("ÚNICAMENTE con JSON");
   }, 15_000);
 
-  it("un 4xx definitivo (401) NO se reintenta y lanza error", async () => {
+  it("contenido de razonador (fences + texto alrededor) en fallback → parsea igual", async () => {
+    const fenced =
+      'Claro, aquí está el análisis:\n```json\n{"scores":[{"axis":"E1","score":8,"confidence":0.8,"rationale":"gravar"}]}\n```';
     const fetchFn = vi
       .fn()
-      .mockResolvedValue(new Response("unauthorized", { status: 401 }));
+      .mockResolvedValueOnce(
+        new Response(
+          JSON.stringify({ choices: [{ message: { content: "" } }] }),
+          { status: 200 }
+        )
+      )
+      .mockResolvedValueOnce(
+        new Response(
+          JSON.stringify({ choices: [{ message: { content: fenced } }] }),
+          { status: 200 }
+        )
+      );
+    const r = await new OpenRouterProvider("k", { fetchFn }).scoreConversation(TURNS);
+    expect(fetchFn).toHaveBeenCalledTimes(2);
+    expect(r.vector.E1).toBe(8);
+  }, 15_000);
+
+  it("si ambos modos fallan (401), lanza el error", async () => {
+    // Response fresca por llamada: un body solo puede leerse una vez.
+    const fetchFn = vi
+      .fn()
+      .mockImplementation(async () => new Response("unauthorized", { status: 401 }));
     await expect(
       new OpenRouterProvider("bad-key", { fetchFn }).scoreConversation(TURNS)
     ).rejects.toThrow(/401/);
-    expect(fetchFn).toHaveBeenCalledTimes(1);
-  });
+    expect(fetchFn).toHaveBeenCalledTimes(2);
+  }, 15_000);
 
-  it("lanza error claro si el contenido no es JSON", async () => {
-    const fetchFn = vi.fn().mockResolvedValue(
-      new Response(
-        JSON.stringify({ choices: [{ message: { content: "esto no es json" } }] }),
-        { status: 200 }
-      )
+  it("lanza error claro si el contenido no es JSON en ambos modos", async () => {
+    const fetchFn = vi.fn().mockImplementation(
+      async () =>
+        new Response(
+          JSON.stringify({ choices: [{ message: { content: "esto no es json" } }] }),
+          { status: 200 }
+        )
     );
     await expect(
       new OpenRouterProvider("k", { fetchFn }).scoreConversation(TURNS)
     ).rejects.toThrow(/JSON/);
+    expect(fetchFn).toHaveBeenCalledTimes(2);
+  }, 15_000);
+
+  it("extractScores tolera <think>, fences y texto alrededor", () => {
+    const think =
+      '<think>hmm el usuario dijo impuestos…</think>\n{"scores":[{"axis":"E2","score":3,"confidence":0.6,"rationale":"x"}]}';
+    expect(extractScores(think).scores).toHaveLength(1);
+
+    const fenced = '```json\n{"scores":[]}\n```';
+    expect(extractScores(fenced).scores).toEqual([]);
+
+    const wrapped = 'Aquí tienes: {"scores":[]} — espero que sirva';
+    expect(extractScores(wrapped).scores).toEqual([]);
+
+    expect(() => extractScores("nada de json")).toThrow();
   });
 
   it("el schema estricto exige additionalProperties:false y todos los campos requeridos", () => {
