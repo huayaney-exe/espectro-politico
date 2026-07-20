@@ -89,16 +89,24 @@ docs/
     PRD-AUDIT.md          Auditoría del PRD contra el objetivo
 ```
 
-### Flujo de datos
+### Flujo de datos (entrevista adaptativa, D9)
 
-1. `Chat.tsx` recorre `probes.json`, muestra cada pregunta y recoge texto libre.
-2. Al terminar, `POST /api/score` con `{ answers: [{probeId, answer}] }`.
-3. La route enriquece cada respuesta con la metadata del probe (server-side) y
-   llama a `provider.scoreConversation()` → `{ vector, confidence, rationale }`.
-4. El vector se codifica en el hash de la URL (`#p=...`) y se navega a
-   `/resultado`. Datos ricos (confianza, autoetiqueta) van en `sessionStorage`;
-   un link compartido lleva solo el vector (funciona para cualquiera, sin exponer nada).
-5. `/resultado` proyecta a 2D, calcula el político más cercano y la frontera.
+1. `Chat.tsx` abre con la primera pregunta (elegida por el engine, local) y
+   recoge texto libre. Tras cada respuesta, `POST /api/interview` con TODO el
+   historial (stateless: nada se guarda server-side).
+2. La route corre el **Estimator** (`provider.scoreConversation`) sobre la
+   transcripción → vector + confianza por eje; el **Engine**
+   (`lib/interview/engine.ts`, código puro) decide: ¿parar (12 ejes con señal,
+   o 9 turnos)? ¿aclarar una duda (ejes del último probe sin resolver, máx 2)?
+   ¿o pasar al tema que más incertidumbre reduce?
+3. El **Converser** (`lib/interview/converser.ts`) redacta la pregunta tejida
+   con lo que el usuario ya dijo (nunca ve los scores; sin key degrada al
+   texto canónico del banco).
+4. Al parar, la misma respuesta trae el `ScoreResult` final. Se pregunta la
+   autoetiqueta (al final, para no anclar), el vector se codifica en el hash
+   (`#p=...`) y se navega a `/resultado`. Datos ricos van en `sessionStorage`.
+5. `/resultado` proyecta a 2D/3D-color, calcula el político más cercano y la
+   frontera de no-representación.
 
 ## Privacidad
 

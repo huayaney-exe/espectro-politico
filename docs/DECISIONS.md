@@ -44,6 +44,20 @@ Frontera de no-representación: si `min_dist > θ (=0.30)`, ningún político te
 ## D6 — Stack
 Next.js 15 (App Router) + TypeScript + Tailwind + framer-motion. Viz SVG hand-rolled (radar 12 ejes + scatter 2D). Persistencia: hash en URL (base64 del vector), sin datos en servidor. Datos de políticos: JSON estático. Deploy target: Vercel/Cloudflare. Corre en `localhost:3000` con `npm run dev`.
 
+## D9 — Motor de entrevista adaptativa (2026-07, supersede la UI de chips de D8)
+Los chips de D8 resolvían la fricción matando el propósito del LLM (feedback del fundador: "quita el propósito de haber incluido AI"). Se reemplazan por el motor adaptativo que D2 siempre prometió:
+
+**Tres roles estrictamente separados** (preserva la mitigación de sicofancia D2/D3):
+- **Estimator** (LLM, `providers/*`): transcripción → vector + confianza por eje. Nunca genera texto de UI. Nunca ve la autoetiqueta.
+- **Converser** (LLM, `interview/converser.ts`): transcripción + tema → pregunta tejida con el contexto. **Nunca ve los scores** (no puede empujar). Neutralidad estricta por prompt; degrada al texto canónico del probe ante cualquier error.
+- **Engine** (código puro, `interview/engine.ts`): confianza → qué tema preguntar (máx reducción de incertidumbre), cuándo aclarar una duda y cuándo parar. Sin LLM. Testeable sin red.
+
+**Criterio de suficiencia**: para cuando los 12 ejes alcanzan confianza τ=0.45, o a los 9 turnos (techo de UX), o si el banco se agota. **Dudas del modelo**: si tras un probe sus ejes siguen bajo 0.25, se re-pregunta UNA aclaración sobre el mismo tema (máx 2 por entrevista); sin key, la aclaración usa una plantilla determinista con los dos polos del eje.
+
+**Flujo**: `/api/interview` stateless (el historial viaja del cliente en cada turno — privacidad D6 intacta); el resultado final sale de la misma llamada que decide parar. Progreso en UI = dimensiones resueltas (k/12), no conteo de preguntas. Longitud típica: 6–9 preguntas (antes 13 fijas). El cierre nombra los ejes que quedaron con señal baja.
+
+Las `options` de probes.json quedan como metadata (no se muestran como chips); "Pasar →" se mantiene. El endpoint `/api/score` se conserva por compatibilidad.
+
 ## D8 — Fricción sobre pureza conversacional (2026-07)
 El flujo 100% texto-libre (13 preguntas × redactar prosa ≈ 10-15 min) producía abandono — validado con el propio fundador abandonando en la pregunta 4. Cambios:
 1. **Chips de postura por probe** (`options` en `probes.json`): 2 polos + 1 matiz, tocables, con auto-avance. Cada chip envía al scorer una *postura canónica completa* (no el label), así el scoring no pierde señal. El texto libre sigue disponible por pregunta ("Prefiero escribirlo con mis palabras") — D2 no se abandona, se hace opcional.
