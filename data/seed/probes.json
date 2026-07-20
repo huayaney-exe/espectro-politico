@@ -1,5 +1,5 @@
 {
-  "version": "0.1",
+  "version": "0.2",
   "language": "es-PE",
   "probes": [
     {
@@ -10,7 +10,21 @@
       "signal_hints": {
         "low": "Prioriza bajar impuestos, teme el gasto público, cree que el privado da mejores servicios, habla de 'plata del pueblo mal gastada'.",
         "high": "Defiende salud y educación gratuitas y universales como derecho, quiere que el Estado invierta fuerte aunque suba impuestos a los que más tienen."
-      }
+      },
+      "options": [
+        {
+          "label": "Universidades y hospitales públicos gratuitos",
+          "answer": "Que invierta en universidades y hospitales públicos gratuitos y universales; la salud y la educación son un derecho."
+        },
+        {
+          "label": "Bajar impuestos para que inviertan",
+          "answer": "Que baje impuestos a las empresas para que inviertan y generen empleo; el sector privado gestiona mejor."
+        },
+        {
+          "label": "Una mezcla de ambas",
+          "answer": "Una mezcla: algo de inversión pública en servicios y algo de alivio tributario, depende del sector."
+        }
+      ]
     },
     {
       "id": "p2",
@@ -20,7 +34,21 @@
       "signal_hints": {
         "low": "La riqueza se gana con esfuerzo, subir impuestos espanta inversión, no hay que castigar al que produce.",
         "high": "La desigualdad es injusta y estructural, hay que gravar a los más ricos y grandes fortunas para redistribuir."
-      }
+      },
+      "options": [
+        {
+          "label": "Cobrarles más impuestos",
+          "answer": "Sí: la desigualdad es estructural, hay que gravar más a los más ricos y a las grandes fortunas para redistribuir."
+        },
+        {
+          "label": "Eso ahuyenta la inversión",
+          "answer": "No: subir impuestos espanta la inversión y al final nos perjudica a todos; la riqueza se gana con esfuerzo."
+        },
+        {
+          "label": "Mejor regular la competencia",
+          "answer": "Más que subir impuestos, el Estado debe regular para que el mercado sea competitivo y romper monopolios y privilegios."
+        }
+      ]
     },
     {
       "id": "p3",
@@ -30,7 +58,21 @@
       "signal_hints": {
         "low": "El país necesita la inversión, no puede una minoría frenar el desarrollo, hay que destrabar los proyectos.",
         "high": "La comunidad decide sobre su territorio, la consulta previa debe ser vinculante, el agua y la tierra valen más que la mina."
-      }
+      },
+      "options": [
+        {
+          "label": "La comunidad decide",
+          "answer": "El Estado debe respetar la decisión de la comunidad: la consulta previa debe ser vinculante, el agua y la tierra valen más que la mina."
+        },
+        {
+          "label": "El proyecto debe avanzar",
+          "answer": "El país necesita la inversión; una minoría no puede frenar el desarrollo de todos, hay que destrabar los proyectos."
+        },
+        {
+          "label": "Solo con acuerdo y garantías",
+          "answer": "Punto medio: el proyecto solo debe ir si la comunidad recibe beneficios reales y garantías ambientales verificables."
+        }
+      ]
     },
     {
       "id": "p4",
@@ -40,7 +82,21 @@
       "signal_hints": {
         "low": "Vender rápido lo que tenemos, el mercado decide, industrializar es caro e ineficiente, mejor libre comercio.",
         "high": "No regalar materia prima, el Estado debe empujar industria nacional y procesamiento local aunque cueste y tarde."
-      }
+      },
+      "options": [
+        {
+          "label": "Industrializar acá aunque tarde",
+          "answer": "No regalar la materia prima: el Estado debe empujar el procesamiento y la industria nacional aunque cueste y tarde años."
+        },
+        {
+          "label": "Exportar rápido como ahora",
+          "answer": "Mejor exportar rápido y que entre plata ya; industrializar a la fuerza es caro e ineficiente, el mercado decide."
+        },
+        {
+          "label": "Exportar hoy, industrializar de a pocos",
+          "answer": "Exportar hoy sin frenar, pero ir construyendo capacidad de procesamiento local gradualmente."
+        }
+      ]
     },
     {
       "id": "p5",
@@ -50,7 +106,21 @@
       "signal_hints": {
         "low": "Evitaría a China por seguridad y por alinearse con EE.UU./Occidente; desconfía de Huawei.",
         "high": "Escogería lo más conveniente para el país sin subordinarse a EE.UU.; valora diversificar proveedores y no depender de una sola potencia."
-      }
+      },
+      "options": [
+        {
+          "label": "El más conveniente, sin subordinarse",
+          "answer": "Escogería lo más conveniente para el país sin subordinarse a EE.UU.: diversificar proveedores y no depender de una sola potencia."
+        },
+        {
+          "label": "Evitar a China por seguridad",
+          "answer": "Evitaría a Huawei y a China por seguridad; mejor proveedores de EE.UU. y Occidente aunque cuesten más."
+        },
+        {
+          "label": "Depende de cada contrato",
+          "answer": "Depende de las condiciones técnicas, de precio y de seguridad de cada contrato; caso por caso, sin dogma."
+        }
+      ]
     },
     {
       "id": "p6",
@@ -60,7 +130,21 @@
       "signal_hints": {
         "low": "Alinearse con EE.UU. da seguridad y respaldo, es el socio natural de Occidente.",
         "high": "El Perú debe ser neutral y autónomo, no atarse militarmente a ninguna potencia, cuidar independencia y diversificar socios."
-      }
+      },
+      "options": [
+        {
+          "label": "Neutralidad: con ninguna potencia",
+          "answer": "El Perú debe ser neutral y autónomo: no atarse militarmente a ninguna potencia y diversificar socios."
+        },
+        {
+          "label": "Aliarse con EE.UU.",
+          "answer": "Alinearse con EE.UU. da seguridad y respaldo; es el socio natural de Occidente."
+        },
+        {
+          "label": "Evaluar según el interés nacional",
+          "answer": "Ni aceptar la base automáticamente ni rechazarla por principio: evaluar cada propuesta según el interés nacional."
+        }
+      ]
     },
     {
       "id": "p6b",
@@ -70,7 +154,21 @@
       "signal_hints": {
         "low": "Dolarizar da estabilidad y frena la inflación y la corrupción monetaria, mejor amarrarse al dólar.",
         "high": "El país debe conservar su moneda y su Banco Central, la soberanía monetaria es clave para decidir su economía."
-      }
+      },
+      "options": [
+        {
+          "label": "Mal: mantener el sol y el BCR",
+          "answer": "Mal: el país debe conservar su moneda y su Banco Central; la soberanía monetaria es clave para decidir su economía."
+        },
+        {
+          "label": "Bien: el dólar da estabilidad",
+          "answer": "Bien: dolarizar da estabilidad y frena la inflación; mejor amarrarse al dólar."
+        },
+        {
+          "label": "Tiene pros y contras",
+          "answer": "Tiene pros y contras: la estabilidad del dólar atrae, pero perder el Banco Central es riesgoso; no me convence del todo ninguna."
+        }
+      ]
     },
     {
       "id": "p7",
@@ -80,7 +178,21 @@
       "signal_hints": {
         "low": "Todos somos peruanos por igual, no hace falta darles trato especial ni tocar la propiedad de la tierra.",
         "high": "Reconocer territorios, lenguas y autoridades indígenas plenamente, con autonomía y reparación histórica."
-      }
+      },
+      "options": [
+        {
+          "label": "Autonomía y derechos plenos",
+          "answer": "Reconocer plenamente territorios, lenguas y autoridades indígenas, con autonomía real y reparación histórica."
+        },
+        {
+          "label": "Trato igual para todos",
+          "answer": "Todos somos peruanos por igual; no hace falta trato especial ni tocar la propiedad de la tierra."
+        },
+        {
+          "label": "Reconocer cultura, sin autonomía",
+          "answer": "Reconocer oficialmente lenguas y cultura, pero sin autonomía territorial separada."
+        }
+      ]
     },
     {
       "id": "p8",
@@ -90,7 +202,21 @@
       "signal_hints": {
         "low": "En contra por valores, la familia es hombre y mujer, se oponen o incomodan con temas trans/LGBT.",
         "high": "A favor pleno de matrimonio igualitario y derechos trans, lo ven como igualdad y libertad."
-      }
+      },
+      "options": [
+        {
+          "label": "A favor",
+          "answer": "A favor del matrimonio igualitario y de los derechos trans; es cuestión de igualdad y libertad."
+        },
+        {
+          "label": "En contra",
+          "answer": "En contra por mis valores; para mí la familia es hombre y mujer."
+        },
+        {
+          "label": "No es mi tema, no me opongo",
+          "answer": "No es un tema que me mueva, pero no me opondría a que cada quien viva como quiera."
+        }
+      ]
     },
     {
       "id": "p9",
@@ -100,7 +226,21 @@
       "signal_hints": {
         "low": "Mano dura, militares en las calles, penas más duras, orden ante todo.",
         "high": "La cárcel y los militares no resuelven, hay que invertir en prevención, oportunidades y reformar la justicia."
-      }
+      },
+      "options": [
+        {
+          "label": "Mano dura y militares",
+          "answer": "Mano dura: militares en las calles y penas más duras; orden ante todo."
+        },
+        {
+          "label": "Prevención y reforma de la justicia",
+          "answer": "La cárcel y los militares no resuelven: hay que invertir en prevención, oportunidades y reformar la justicia."
+        },
+        {
+          "label": "Firmeza hoy + prevención de fondo",
+          "answer": "Las dos cosas: firmeza contra el crimen hoy, y prevención y reforma judicial de fondo."
+        }
+      ]
     },
     {
       "id": "p10",
@@ -110,7 +250,21 @@
       "signal_hints": {
         "low": "Mejor mirar adelante, no reabrir heridas, hasta amnistía para los militares; el pasado divide.",
         "high": "Hay que juzgar a los responsables y mantener la memoria de las víctimas, sin impunidad."
-      }
+      },
+      "options": [
+        {
+          "label": "Investigar, juzgar y recordar",
+          "answer": "Hay que investigar, juzgar a los responsables y mantener la memoria de las víctimas; sin impunidad."
+        },
+        {
+          "label": "Pasar la página",
+          "answer": "Mejor mirar adelante y buscar reconciliación; reabrir heridas divide al país."
+        },
+        {
+          "label": "Justicia en lo grave, sin anclarse",
+          "answer": "Justicia en los casos graves, pero sin quedarnos anclados en el pasado."
+        }
+      ]
     },
     {
       "id": "p11",
@@ -120,7 +274,21 @@
       "signal_hints": {
         "low": "Comprar afuera lo que ya funciona, no reinventar la rueda, abrirse al mundo y al mejor proveedor.",
         "high": "Desarrollar capacidad e industria propias, reducir dependencia externa, invertir en tecnología nacional."
-      }
+      },
+      "options": [
+        {
+          "label": "Desarrollar industria propia",
+          "answer": "Apostar por desarrollar empresas, software e industria propias aunque sea más lento y caro; reducir la dependencia externa."
+        },
+        {
+          "label": "Comprar lo que ya funciona",
+          "answer": "Comprar afuera lo que ya funciona; no reinventar la rueda, abrirse al mejor proveedor."
+        },
+        {
+          "label": "Comprar hoy, desarrollar lo estratégico",
+          "answer": "Comprar lo urgente afuera y desarrollar capacidad propia solo en sectores estratégicos."
+        }
+      ]
     },
     {
       "id": "p12",
@@ -130,7 +298,21 @@
       "signal_hints": {
         "low": "El Estado debe apoyar la elección privada con becas/vouchers, lo público suele ser deficiente.",
         "high": "El Estado debe garantizar educación pública gratuita y de calidad como columna, no subsidiar lo privado."
-      }
+      },
+      "options": [
+        {
+          "label": "Fortalecer lo público gratuito",
+          "answer": "El Estado debe garantizar educación pública gratuita y de calidad como columna; no subsidiar lo privado."
+        },
+        {
+          "label": "Becas y bonos para elegir",
+          "answer": "Mejor becas y vouchers para que cada familia elija, incluso en lo privado; lo público suele ser deficiente."
+        },
+        {
+          "label": "Público fuerte + becas donde falte",
+          "answer": "Fortalecer lo público, pero con becas donde lo público aún no alcanza calidad."
+        }
+      ]
     }
   ]
 }

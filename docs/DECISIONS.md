@@ -44,5 +44,13 @@ Frontera de no-representación: si `min_dist > θ (=0.30)`, ningún político te
 ## D6 — Stack
 Next.js 15 (App Router) + TypeScript + Tailwind + framer-motion. Viz SVG hand-rolled (radar 12 ejes + scatter 2D). Persistencia: hash en URL (base64 del vector), sin datos en servidor. Datos de políticos: JSON estático. Deploy target: Vercel/Cloudflare. Corre en `localhost:3000` con `npm run dev`.
 
+## D8 — Fricción sobre pureza conversacional (2026-07)
+El flujo 100% texto-libre (13 preguntas × redactar prosa ≈ 10-15 min) producía abandono — validado con el propio fundador abandonando en la pregunta 4. Cambios:
+1. **Chips de postura por probe** (`options` en `probes.json`): 2 polos + 1 matiz, tocables, con auto-avance. Cada chip envía al scorer una *postura canónica completa* (no el label), así el scoring no pierde señal. El texto libre sigue disponible por pregunta ("Prefiero escribirlo con mis palabras") — D2 no se abandona, se hace opcional.
+2. **"Pasar →" por pregunta**: sin respuesta → el eje queda neutral con confianza baja (honesto, ya soportado por el modelo de confianza).
+3. **Autoetiqueta movida AL FINAL**: abrir prometiendo "no te preguntaré izquierda/derecha" y preguntarlo de inmediato era una contradicción y confundía (además la audiencia objetivo es justo la que no se identifica con esas etiquetas). Preguntarla después de las respuestas elimina la contradicción, reduce fricción de entrada y evita anclar las respuestas; el contraste del reveal funciona igual. Opción "Ninguna me representa".
+4. **Progreso numérico** ("4 / 13") junto a la barra.
+Tiempo estimado de completar: de 10-15 min a ~2-3 min. Trade-off aceptado: los chips anclan hacia 3 posturas por tema; el matiz fino vive en el texto libre opcional.
+
 ## D7 — Alcance MVP (sin token)
 Funcional en localhost con MockProvider: chat → vector 12 ejes → radar + mapa 2D → político más cercano + frontera → tarjeta compartible (URL hash). AnthropicProvider listo para activar con key. País inicial: Perú (Argentina incluida como segundo dataset).
