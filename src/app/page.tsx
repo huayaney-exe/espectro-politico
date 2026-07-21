@@ -40,13 +40,13 @@ export default function Home() {
             },
             {
               n: "02",
-              t: "Te ubicamos",
-              d: "Un modelo interpreta tus respuestas y arma tu vector de 12 ejes, con la confianza de cada dimensión. Sin etiqueta.",
+              t: "Te leemos",
+              d: "Un modelo interpreta tus respuestas, profundiza donde hay dudas y arma tu perfil con la confianza de cada dimensión. Sin etiqueta.",
             },
             {
               n: "03",
-              t: "Ves la frontera",
-              d: "Comparamos tu vector con políticos reales y te mostramos por qué ninguno te representa del todo. Eso es lo que el binario esconde.",
+              t: "Ves tu huella",
+              d: "Tu arquetipo, tus prioridades y tus tensiones internas: la forma de tu identidad política en 5 dimensiones. Eso es lo que el binario esconde.",
             },
           ].map((s) => (
             <div key={s.n} className="panel p-5">
@@ -82,9 +82,9 @@ export default function Home() {
       <footer className="max-w-4xl mx-auto px-6 py-16">
         <div className="spectrum-bar h-1 w-full rounded-full mb-6 opacity-40" />
         <p className="text-sm" style={{ color: "var(--color-ink-faint)" }}>
-          Metodología abierta · Código abierto · Sin datos en servidor · Calibrado
-          para Perú y Argentina (más países en camino). Los perfiles de políticos
-          son ilustrativos y requieren validación experta.
+          Metodología abierta · Código abierto · Sin datos en servidor propio ·
+          Calibrado para América Latina. Herramienta educativa e ilustrativa —
+          no es un instrumento psicométrico validado.
         </p>
       </footer>
     </main>

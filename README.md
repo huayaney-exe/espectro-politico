@@ -1,12 +1,15 @@
 # Espectro
 
-**No eres un punto en una línea. Eres un vector.**
+**No eres un punto en una línea. Eres una huella.**
 
-Herramienta de auto-mapeo político conversacional que reemplaza el binario
-izquierda/derecha por un vector de **12 dimensiones** calibrado para América
-Latina. El usuario conversa, un modelo interpreta sus respuestas y ubica su
-posición real en 12 ejes; luego la compara con políticos reales y muestra la
-**frontera de no-representación** (por qué ningún político lo representa del todo).
+Herramienta de **autoconocimiento político** conversacional. Reemplaza el
+binario izquierda/derecha por un perfil de identidad propio: una entrevista
+adaptativa mide 12 ejes calibrados para América Latina, que agregan a **5
+dimensiones ancladas en marcos de ciencia política** (Bobbio, GAL–TAN,
+Inglehart–Welzel, CEPAL). El resultado es tu arquetipo, tu posición por
+dimensión, tus tensiones internas y tu huella en radar — **sin compararte con
+ningún político ni partido**. Herramienta educativa, no un instrumento
+psicométrico validado.
 
 Producto derivado del set analítico sobre geopolítica y desinformación en LATAM
 (ver `../../.context/`). Este es el "mantra 0": membrana de adopción.
@@ -60,31 +63,26 @@ src/
   app/
     page.tsx              Landing (thesis + 12 ejes)
     test/page.tsx         Chat conversacional
-    resultado/page.tsx    Resultado: radar + mapa 2D + políticos + reveal
-    metodologia/page.tsx  Metodología abierta
-    api/score/route.ts    POST respuestas → vector (server-side, provider)
+    resultado/page.tsx    Resultado: arquetipo + narrativa + huella 5D + 12 ejes
+    metodologia/page.tsx  Metodología abierta (marcos citados)
+    api/interview/route.ts POST turno de entrevista adaptativa (stateless)
+    api/score/route.ts    POST respuestas → vector (compat)
   lib/
-    axes.ts               Los 12 ejes (definición, poles, clusters)
-    projection.ts         Matriz fija 12→3 (X económico, Y cultural, Z territorio)
-    distance.ts           Distancia euclidiana ponderada + frontera no-representación
+    axes.ts               Los 12 ejes de medición (definición, poles, clusters)
+    identity.ts           5 dimensiones (marcos citados) + arquetipo + narrativa
     encoding.ts           Vector ↔ hash de URL (persistencia sin servidor)
-    describe.ts           Descriptor estructural (no ideológico) + texto para compartir
     probes.ts             Banco de preguntas conversacionales
-    politicians.ts        Datasets de políticos (PE, AR)
-    providers/            Adaptador LLM: types · mock · anthropic · index
+    interview/            Motor adaptativo: engine (puro) + converser (LLM)
+    providers/            Adaptador LLM: types · mock · anthropic · openai · openrouter
   components/
-    Chat.tsx              Conduce la conversación, llama a /api/score
-    Radar.tsx             Radar SVG de 12 ejes
-    SpectrumMap.tsx       Scatter 2D (usuario + políticos proyectados)
-    AxisBars.tsx          12 barras con confianza por eje
-    PoliticianMatch.tsx   Ranking de cercanía + frontera de no-representación
+    Chat.tsx              Entrevista adaptativa, llama a /api/interview
+    Radar.tsx             Radar SVG genérico (huella de 5 dimensiones)
+    AxisBars.tsx          12 barras divergentes con confianza por eje
 data/seed/
     probes.json           13 probes que cubren los 12 ejes
-    politicians.pe.json   8 figuras (Perú)
-    politicians.ar.json   6 figuras (Argentina)
 docs/
     THEORY.md             Grounding en literatura politológica
-    DECISIONS.md          Fuente de verdad de arquitectura (leer primero)
+    DECISIONS.md          Fuente de verdad de arquitectura (leer primero; D10 = pivot identidad)
     PRD.md                Product Requirements Document
     PRD-AUDIT.md          Auditoría del PRD contra el objetivo
 ```
@@ -105,8 +103,8 @@ docs/
 4. Al parar, la misma respuesta trae el `ScoreResult` final. Se pregunta la
    autoetiqueta (al final, para no anclar), el vector se codifica en el hash
    (`#p=...`) y se navega a `/resultado`. Datos ricos van en `sessionStorage`.
-5. `/resultado` proyecta a 2D/3D-color, calcula el político más cercano y la
-   frontera de no-representación.
+5. `/resultado` agrega los 12 ejes a las 5 dimensiones (`lib/identity.ts`) y
+   muestra arquetipo, narrativa, huella en radar y detalle por eje.
 
 ## Privacidad
 
@@ -125,8 +123,8 @@ npm test           # vitest (38 tests: projection, distance, encoding, describe,
 
 ## Límites honestos
 
-- Perfiles de políticos: **ilustrativos**, derivados de posiciones públicas
-  documentadas, requieren validación experta (ver `disclaimer` en cada dataset).
+- **Herramienta educativa e ilustrativa** — no es un instrumento psicométrico
+  validado ni un diagnóstico. El aviso es visible en la UI.
 - El `MockProvider` no entiende matices; es un floor. El valor real llega con el LLM.
 - Las preguntas pueden tener sesgos de redacción a corregir con pilotaje.
 - No reemplaza análisis ni organización política: es auto-observación.

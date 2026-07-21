@@ -1,31 +1,49 @@
 "use client";
 
-import { AXES, Vector } from "@/lib/axes";
+// Radar genérico ("huella" de identidad). SVG a mano, sin librerías:
+// coherente con el stack (cero deps), control total de tokens y a11y.
+// Nota perceptual: el orden de los ejes es fijo y documentado (D10) porque
+// los radares sugieren relación entre ejes adyacentes; el detalle honesto
+// por dimensión vive en las barras divergentes, no aquí.
 
-interface Props {
-  vector: Vector;
-  compare?: { vector: Vector; label: string; color: string } | null;
-  size?: number;
+export interface RadarPoint {
+  label: string;
+  value: number; // 0–max
 }
 
-export default function Radar({ vector, compare, size = 360 }: Props) {
+interface Props {
+  points: RadarPoint[];
+  size?: number;
+  max?: number;
+  /** Etiqueta accesible del gráfico. */
+  ariaLabel?: string;
+}
+
+export default function Radar({
+  points,
+  size = 360,
+  max = 10,
+  ariaLabel = "Radar de dimensiones",
+}: Props) {
   const cx = size / 2;
   const cy = size / 2;
-  const r = size / 2 - 54;
-  const n = AXES.length;
+  const r = size / 2 - 58;
+  const n = points.length;
 
   const angleFor = (i: number) => (Math.PI * 2 * i) / n - Math.PI / 2;
 
   const pointFor = (i: number, value: number) => {
     const a = angleFor(i);
-    const rad = (value / 10) * r;
+    const rad = (value / max) * r;
     return [cx + Math.cos(a) * rad, cy + Math.sin(a) * rad] as const;
   };
 
-  const polygon = (v: Vector) =>
-    AXES.map((ax, i) => pointFor(i, v[ax.id]).join(",")).join(" ");
+  const polygon = points
+    .map((p, i) => pointFor(i, Math.max(0, Math.min(max, p.value))).join(","))
+    .join(" ");
 
-  const rings = [2.5, 5, 7.5, 10];
+  const rings = [max * 0.25, max * 0.5, max * 0.75, max];
+  const neutral = max / 2;
 
   return (
     <svg
@@ -33,7 +51,7 @@ export default function Radar({ vector, compare, size = 360 }: Props) {
       width="100%"
       style={{ maxWidth: size, height: "auto" }}
       role="img"
-      aria-label="Radar de 12 ejes políticos"
+      aria-label={ariaLabel}
     >
       <defs>
         <linearGradient id="radarFill" x1="0" y1="0" x2="1" y2="1">
@@ -43,24 +61,24 @@ export default function Radar({ vector, compare, size = 360 }: Props) {
         </linearGradient>
       </defs>
 
-      {/* Anillos de referencia — el de 5 (posición neutral) va enfatizado */}
+      {/* Anillos de referencia — el neutral (centro de la escala) enfatizado */}
       {rings.map((ring) => (
         <polygon
           key={ring}
-          points={AXES.map((_, i) => pointFor(i, ring).join(",")).join(" ")}
+          points={points.map((_, i) => pointFor(i, ring).join(",")).join(" ")}
           fill="none"
-          stroke={ring === 5 ? "var(--color-border)" : "var(--color-grid)"}
+          stroke={ring === neutral ? "var(--color-border)" : "var(--color-grid)"}
           strokeWidth={1}
-          strokeDasharray={ring === 5 ? "3 3" : undefined}
+          strokeDasharray={ring === neutral ? "3 3" : undefined}
         />
       ))}
 
-      {/* Escala: marca los anillos 5 y 10 sobre el radio vertical */}
-      {[5, 10].map((ring) => (
+      {/* Escala: marca el anillo neutral y el máximo */}
+      {[neutral, max].map((ring) => (
         <text
           key={ring}
           x={cx + 4}
-          y={cy - (ring / 10) * r + (ring === 10 ? 10 : -3)}
+          y={cy - (ring / max) * r + (ring === max ? 10 : -3)}
           fontSize={8}
           fill="var(--color-ink-faint)"
         >
@@ -69,13 +87,13 @@ export default function Radar({ vector, compare, size = 360 }: Props) {
       ))}
 
       {/* Radios + etiquetas */}
-      {AXES.map((ax, i) => {
-        const [x, y] = pointFor(i, 10);
-        const [lx, ly] = pointFor(i, 12.1);
+      {points.map((p, i) => {
+        const [x, y] = pointFor(i, max);
+        const [lx, ly] = pointFor(i, max * 1.24);
         const anchor =
           Math.abs(lx - cx) < 12 ? "middle" : lx > cx ? "start" : "end";
         return (
-          <g key={ax.id}>
+          <g key={p.label}>
             <line
               x1={cx}
               y1={cy}
@@ -87,45 +105,30 @@ export default function Radar({ vector, compare, size = 360 }: Props) {
             <text
               x={lx}
               y={ly}
-              fontSize={9.5}
+              fontSize={11}
               fill="var(--color-ink-soft)"
               textAnchor={anchor as "start" | "middle" | "end"}
               dominantBaseline="middle"
             >
-              {ax.short}
+              {p.label}
             </text>
           </g>
         );
       })}
 
-      {/* Polígono de comparación (político) */}
-      {compare && (
-        <polygon
-          points={polygon(compare.vector)}
-          fill={compare.color}
-          fillOpacity={0.12}
-          stroke={compare.color}
-          strokeWidth={1.5}
-          strokeLinejoin="round"
-          strokeDasharray="4 3"
-        />
-      )}
-
-      {/* Polígono del usuario */}
+      {/* Huella del usuario */}
       <g className="radar-in">
         <polygon
-          points={polygon(vector)}
+          points={polygon}
           fill="url(#radarFill)"
           fillOpacity={0.28}
           stroke="url(#radarFill)"
           strokeWidth={2}
           strokeLinejoin="round"
         />
-        {AXES.map((ax, i) => {
-          const [x, y] = pointFor(i, vector[ax.id]);
-          return (
-            <circle key={ax.id} cx={x} cy={y} r={2.6} fill="var(--color-ink)" />
-          );
+        {points.map((p, i) => {
+          const [x, y] = pointFor(i, Math.max(0, Math.min(max, p.value)));
+          return <circle key={p.label} cx={x} cy={y} r={3} fill="var(--color-ink)" />;
         })}
       </g>
     </svg>

@@ -1,5 +1,19 @@
 # Espectro — Decisiones de arquitectura (fuente de verdad)
 
+## D10 — Pivot: de matching con políticos a identidad política propia (2026-07)
+**Supersede D4 (proyección 12→3) y D5 (distancia/frontera con políticos).** El producto ya no es electoral: es de **autoconocimiento**. Se elimina todo el roster de políticos (PE/AR), el ranking de cercanía, la frontera de no-representación y el mapa 2D proyectado. Eliminados: `politicians.ts`, `distance.ts`, `projection.ts`, `describe.ts`, `SpectrumMap.tsx`, `PoliticianMatch.tsx`, `data/seed/politicians.*.json`.
+
+**Nueva capa de identidad (`lib/identity.ts`)**: los 12 ejes E1..E12 (D1) quedan como **instrumento de medición**; agregan a **5 dimensiones** ancladas en marcos reconocidos (citados en el código):
+1. **Económica** (Estado↔mercado) — Bobbio 1994 (igualdad como criterio), CHES LRECON, Downs 1957. Ejes: E1, E11.
+2. **Sociocultural** (tradicional↔progresista) — GAL–TAN (Hooghe/Marks/Wilson 2002), Inglehart–Welzel. Eje: E8.
+3. **Autoridad** (orden↔garantías) — polo TAN, Stenner 2005, Altemeyer 1981. Ejes: E9, E10(0.8).
+4. **Comunidad** (individual↔comunitario) — comunitarismo (Taylor, Etzioni), Inglehart–Welzel. Ejes: E7, E2(0.8).
+5. **Soberanía** (integración↔autonomía) — CEPAL/dependencia (Prebisch, Cardoso & Faletto); análogo CHES-integración. Ejes: E3, E4, E5, E6, E12.
+
+Cada eje alimenta **exactamente una** dimensión (test lo verifica; corrige el doble conteo I2 del audit). El Political Compass NO es fuente metodológica (algoritmo no publicado).
+
+**Resultado** = arquetipo descriptivo (compuesto sobre el plano económico×cultural de Kitschelt 1994 + máx. 2 modificadores; familias de von Beyme 1985 como referencia) + frase por dimensión + narrativa determinista (prioridades, tensiones/presiones cruzadas, honestidad de señal baja) + **radar de 5 dimensiones** (decisión de viz: huella de identidad; SVG a mano, cero deps; detalle honesto en barras divergentes de 12 ejes). Aviso visible: herramienta educativa, no instrumento psicométrico validado. `emergentLean` se conserva SOLO como "sombra 1D" (Bobbio) para el contraste con la autoetiqueta.
+
 ## D1 — Modelo dimensional: 12 ejes (no 10)
 Se mantienen los **12 ejes** del diseño original. La consolidación a 10 propuesta por el análisis teórico (fusionar las cuatro soberanías) se **rechaza**: la granularidad de soberanía Productiva/Tecnológica/Militar/Monetaria es el diferenciador LATAM frente a 8values/Political Compass. Se adopta del análisis teórico su *metodología* (proyección determinista, distancia euclidiana ponderada, avisos de colinealidad, cautelas de validez), no su reducción de ejes.
 

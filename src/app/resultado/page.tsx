@@ -1,15 +1,16 @@
 "use client";
 
+// Resultado = perfil de identidad política PROPIA (D10): arquetipo,
+// narrativa, huella de 5 dimensiones y detalle del instrumento de 12 ejes.
+// Sin comparación con políticos ni partidos.
+
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Vector, Confidence } from "@/lib/axes";
-import { decodeVector, encodeVector } from "@/lib/encoding";
-import { describeProfile, shareText } from "@/lib/describe";
-import { getDataset, COUNTRIES, CountryCode } from "@/lib/politicians";
+import { decodeVector } from "@/lib/encoding";
+import { identityProfile, shareIdentityText } from "@/lib/identity";
 import Radar from "@/components/Radar";
-import SpectrumMap from "@/components/SpectrumMap";
 import AxisBars from "@/components/AxisBars";
-import PoliticianMatch from "@/components/PoliticianMatch";
 
 interface Rich {
   vector: Vector;
@@ -21,7 +22,6 @@ interface Rich {
 export default function ResultadoPage() {
   const [vector, setVector] = useState<Vector | null>(null);
   const [rich, setRich] = useState<Rich | null>(null);
-  const [country, setCountry] = useState<CountryCode>("PE");
   const [copied, setCopied] = useState(false);
   const [ready, setReady] = useState(false);
 
@@ -55,8 +55,7 @@ export default function ResultadoPage() {
 
   if (!vector) return <main className="min-h-screen" />;
 
-  const profile = describeProfile(vector);
-  const dataset = getDataset(country);
+  const profile = identityProfile(vector, rich?.confidence);
   const selfLabelNorm = (rich?.selfLabel || "").toLowerCase();
   const contrast =
     selfLabelNorm &&
@@ -65,7 +64,7 @@ export default function ResultadoPage() {
 
   async function share() {
     const url = typeof window !== "undefined" ? window.location.href : "";
-    const text = shareText(vector!, url);
+    const text = shareIdentityText(profile, url);
     try {
       if (navigator.share) {
         await navigator.share({ text, url });
@@ -76,6 +75,9 @@ export default function ResultadoPage() {
       }
     } catch {}
   }
+
+  const tierLabel = (t: "low" | "mid" | "high", low: string, high: string) =>
+    t === "low" ? low : t === "high" ? high : "mixto";
 
   return (
     <main className="min-h-screen px-6 py-10">
@@ -94,78 +96,113 @@ export default function ResultadoPage() {
           </div>
         </div>
 
-        {/* Encabezado / reveal */}
+        {/* Reveal: arquetipo + narrativa */}
         <section className="mb-10">
           <div className="spectrum-bar h-1.5 w-24 rounded-full mb-5" />
           <p className="text-sm mb-2" style={{ color: "var(--color-ink-faint)" }}>
-            Tu posición no es una etiqueta. Es esto:
+            Tu identidad política no es una etiqueta. Es esta huella:
           </p>
-          <h1 className="font-display text-3xl sm:text-4xl leading-tight mb-4 sentence-case">
-            {profile.label}
+          <h1 className="font-display text-3xl sm:text-4xl leading-tight mb-3 sentence-case">
+            {profile.archetype}
           </h1>
+          {profile.family && (
+            <p className="text-sm mb-4" style={{ color: "var(--color-ink-faint)" }}>
+              Familia política cercana: {profile.family}
+            </p>
+          )}
+          <p
+            className="max-w-2xl text-[15px] leading-relaxed mb-4"
+            style={{ color: "var(--color-ink-soft)" }}
+          >
+            {profile.narrative}
+          </p>
+
           {contrast && (
-            <div className="panel p-4 max-w-2xl">
+            <div className="panel p-4 max-w-2xl mb-4">
               <p style={{ color: "var(--color-ink-soft)" }}>
-                Al empezar te identificaste como{" "}
+                Al final te identificaste como{" "}
                 <strong style={{ color: "var(--color-ink)" }}>{rich?.selfLabel}</strong>.
-                Tus respuestas dibujan un perfil{" "}
+                Tu huella dibuja un perfil{" "}
                 <strong className="spectrum-text">{profile.emergentLean}</strong>. Esa
-                distancia entre tu etiqueta y tu vector es exactamente lo que el
-                binario izquierda/derecha esconde.
+                distancia entre la etiqueta y la forma real es exactamente lo que
+                el binario izquierda/derecha esconde.
               </p>
             </div>
           )}
+
           {rich?.provider === "mock" && (
-            <p className="text-[11px] mt-3" style={{ color: "var(--color-ink-faint)" }}>
+            <p className="text-[11px] mb-2" style={{ color: "var(--color-ink-faint)" }}>
               Perfil calculado con el scorer heurístico local (sin modelo de IA).
               Con una API key conectada, la lectura conversacional es mucho más fina.
             </p>
           )}
+          <p className="text-[11px]" style={{ color: "var(--color-ink-faint)" }}>
+            ⚠ Herramienta educativa e ilustrativa: no es un instrumento
+            psicométrico validado ni un diagnóstico. Marcos de referencia en la{" "}
+            <Link href="/metodologia" className="underline underline-offset-2">
+              metodología
+            </Link>
+            .
+          </p>
         </section>
 
-        {/* Grid principal */}
+        {/* Huella + dimensiones */}
         <section className="grid lg:grid-cols-2 gap-8 mb-10">
           <div className="panel p-6 flex flex-col items-center">
-            <h2 className="font-display text-xl mb-4 self-start">Tu radar de 12 ejes</h2>
-            <Radar vector={vector} />
+            <h2 className="font-display text-xl mb-4 self-start">Tu huella</h2>
+            <Radar
+              size={400}
+              ariaLabel="Huella de identidad en 5 dimensiones"
+              points={profile.dimensions.map((d) => ({
+                label: d.dimension.name,
+                value: d.score,
+              }))}
+            />
+            <p className="text-xs mt-2 self-start" style={{ color: "var(--color-ink-faint)" }}>
+              5 dimensiones ancladas en marcos de ciencia política (GAL–TAN,
+              Inglehart–Welzel, Bobbio, CEPAL). El anillo punteado es el centro.
+            </p>
           </div>
-          <div className="panel p-6">
-            <h2 className="font-display text-xl mb-4">Tu mapa</h2>
-            <SpectrumMap vector={vector} politicians={dataset.politicians} />
-          </div>
-        </section>
 
-        {/* Comparación con políticos */}
-        <section className="panel p-6 mb-10">
-          <div className="flex items-center justify-between mb-6 flex-wrap gap-3">
-            <h2 className="font-display text-xl">Frente a los políticos</h2>
-            <div className="flex gap-1 p-1 rounded-full" style={{ background: "var(--color-bg-soft)" }}>
-              {COUNTRIES.map((c) => (
-                <button
-                  key={c.code}
-                  onClick={() => setCountry(c.code)}
-                  className="px-4 py-1.5 rounded-full text-sm transition"
-                  style={
-                    country === c.code
-                      ? { background: "var(--color-ink)", color: "var(--color-bg)" }
-                      : { color: "var(--color-ink-soft)" }
-                  }
-                >
-                  {c.label}
-                </button>
+          <div className="panel p-6">
+            <h2 className="font-display text-xl mb-5">Dimensión por dimensión</h2>
+            <div className="flex flex-col gap-5">
+              {profile.dimensions.map((d) => (
+                <div key={d.dimension.id}>
+                  <div className="flex items-baseline justify-between mb-1">
+                    <span className="font-display" style={{ color: "var(--color-ink)" }}>
+                      {d.dimension.name}
+                    </span>
+                    <span
+                      className="text-xs tabular-nums"
+                      style={{
+                        color:
+                          d.confidence < 0.3
+                            ? "var(--color-ink-faint)"
+                            : "var(--color-ink-soft)",
+                      }}
+                    >
+                      {tierLabel(d.tier, d.dimension.poleLow, d.dimension.poleHigh)} ·{" "}
+                      {d.score.toFixed(1)}/10
+                      {d.confidence < 0.3 && " · señal baja"}
+                    </span>
+                  </div>
+                  <p className="text-sm" style={{ color: "var(--color-ink-soft)" }}>
+                    {d.phrase.charAt(0).toUpperCase() + d.phrase.slice(1)}.
+                  </p>
+                </div>
               ))}
             </div>
           </div>
-          <PoliticianMatch
-            vector={vector}
-            politicians={dataset.politicians}
-            disclaimer={dataset.disclaimer}
-          />
         </section>
 
-        {/* Detalle por eje */}
+        {/* Instrumento: los 12 ejes de medición */}
         <section className="panel p-6 mb-10">
-          <h2 className="font-display text-xl mb-6">Dimensión por dimensión</h2>
+          <h2 className="font-display text-xl mb-1">Bajo el capó: los 12 ejes</h2>
+          <p className="text-sm mb-6" style={{ color: "var(--color-ink-soft)" }}>
+            Las 5 dimensiones se miden con 12 ejes calibrados para América
+            Latina. Este es tu detalle crudo, con la confianza de cada lectura.
+          </p>
           <AxisBars vector={vector} confidence={rich?.confidence} />
         </section>
 
